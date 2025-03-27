@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Absensi;
 
 class PembimbingController extends Controller
 {
@@ -25,10 +26,23 @@ class PembimbingController extends Controller
 
     public function monitoring()
     {
-        return view(
+        $userId = auth()->user()->id;
+        $pembimbingId = \App\Models\Pembimbing::where('user_id', $userId)->value('id');
+        // dd($pembimbingId);
+        $absensiData = Absensi::where('pembimbing_id', $pembimbingId)->get();
+
+        if ($absensiData->isNotEmpty()) {
+            return view(
+            'pembimbing.monitoring',
+            ['title' => 'Monitoring Siswa'],
+            compact('absensiData')
+            );
+        } else {
+            return view(
             'pembimbing.monitoring',
             ['title' => 'Monitoring Siswa']
-        );
+            );
+        }
     }
 
     public function nilai()

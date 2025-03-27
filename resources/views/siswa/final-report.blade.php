@@ -14,6 +14,7 @@
 </div>
 
 <div class="page-content">
+    @if(isset($kelompok) && isset($pembimbing))
     <div class="row">
         <div class="col-12 col-lg-6">
             <div class="card">
@@ -28,29 +29,42 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Unggah Laporan Akhir</h4>
-                </div>
-                <div class="card-body">
-                    <form action="" method="post" class="form form-vertical">
+            <form action="{{route('siswa.upload-laporan-akhir')}}" method="post" class="form form-vertical" enctype="multipart/form-data">
+                @csrf
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Unggah Laporan Akhir</h4>
+                    </div>
+                    <div class="card-body">
                         <div class="form-body">
                             <div class="row">
                                 <!-- id kelompok -->
-                                <input type="hidden" id="idKelompok" value="">
+                                <input type="hidden" id="idKelompok" name="idKelompok" value="{{ $kelompok->id }}">
                                 <!-- end id kelompok -->
                                 <div class="col-12">
-                                    <label for="finalReport" class="form-label">File Laporan Akhir</label>
-                                    <input class="form-control" type="file" id="finalReport">
+                                    <div class="form-group">
+                                        <label for="finalReport" class="form-label">File Laporan Akhir</label>
+                                        <input class="form-control" type="file" id="finalReport" name="finalReport" require>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+            </form>
+        </div>
+    </div>
+    @else
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Informasi</h4>
+            <div class="alert alert-warning">
+                Pendaftaran kamu belum disetujui. Silahkan hubungi koordinator Prakerin!
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 @endsection

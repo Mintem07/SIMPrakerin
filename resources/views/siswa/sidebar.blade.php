@@ -19,8 +19,9 @@
                     </a>
                 </li>
 
-                <li class="sidebar-title text-secondary">Pendaftaran</li>
-                <hr class="mb-2">
+                <div class="divider">
+                    <div class="divider-text">Pendaftaran</div>
+                </div>
 
                 <li class="sidebar-item {{ request()->is('siswa/profil') ? 'active' : '' }}">
                     <a href="{{ url('/siswa/profil')}}" class='sidebar-link'>
@@ -35,12 +36,13 @@
                         <span>Pengajuan</span>
                     </a>
                 </li>
-                
-                <li class="sidebar-title text-secondary">Pelaksanaan</li>
-                <hr class="mb-2">
+
+                <div class="divider">
+                    <div class="divider-text">Pelaksanaan</div>
+                </div>
 
                 <li class="sidebar-item {{ request()->is('siswa/absensi-mingguan') ? 'active' : '' }}">
-                    <a href="{{ url('/siswa/absensi-mingguan')}}" class='sidebar-link'>
+                    <a href="{{ url('/siswa/absensi')}}" class='sidebar-link'>
                         <i class="bi bi-calendar-event-fill"></i>
                         <span>Absensi</span>
                     </a>
@@ -54,6 +56,13 @@
                 </li>
 
                 <hr class="mb-2">
+
+                <li class="sidebar-item {{ request()->is('siswa/setting') ? 'active' : '' }}">
+                    <a href="{{ url('/siswa/setting')}}" class='sidebar-link'>
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Setting</span>
+                    </a>
+                </li>
 
                 <li class="sidebar-item">
                     <a href="{{ route('logout') }}" class='sidebar-link'

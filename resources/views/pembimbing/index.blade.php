@@ -2,13 +2,9 @@
 @section('content')
 
 <div id="app">
+    @include('pembimbing.sidebar')
     <div id="main">
-        <!-- side bar -->
-        @include('pembimbing.sidebar')
-        <!-- end side bar -->
-
         @yield('contentPembimbing')
-
         @include('footer')
     </div>
 </div>

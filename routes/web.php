@@ -36,11 +36,13 @@ Route::middleware(['auth', 'siswa'])->group(function () {
 
         Route::get('/pengajuan-kelompok', [SiswaController::class, 'viewPengajuan'])->name('siswa.pengajuan');
         Route::post('/add-pengajuan-kelompok', [SiswaController::class, 'ajukanKelompok'])->name('siswa.simpan-pengajuan');
+        Route::post('/update-pengajuan-kelompok/{id}', [SiswaController::class, 'updateAjukanKelompok'])->name('siswa.edit-pengajuan');
 
-        Route::get('/absensi-mingguan', [SiswaController::class, 'absensi'])->name('siswa.absensi');
-        Route::post('/add-absensi-mingguan', [SiswaController::class, 'absensiMingguan'])->name('siswa.add-absensi');
-
+        Route::get('/absensi', [SiswaController::class, 'absensi'])->name('siswa.absensi');
+        Route::post('/add-absensi', [SiswaController::class, 'addAbsensi'])->name('siswa.add-absensi');
+        
         Route::get('/laporan-akhir', [SiswaController::class, 'laporanAkhir'])->name('siswa.final-report');
+        Route::post('/upload-laporan-akhir', [SiswaController::class, 'uploadLaporanAkhir'])->name('siswa.upload-laporan-akhir');
 
     });
 });
