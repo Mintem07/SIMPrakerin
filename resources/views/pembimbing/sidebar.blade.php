@@ -12,8 +12,6 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <li class="sidebar-title">Menu</li>
-
                 <li class="sidebar-item  {{ request()->is('pembimbing') ? 'active' : '' }}">
                     <a href="{{ url('/pembimbing')}}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
@@ -21,18 +19,27 @@
                     </a>
                 </li>
 
-                <hr class="my-3">
+                <div class="divider">
+                    <div class="divider-text">Pelaksanaan</div>
+                </div>
 
                 <li class="sidebar-item {{ request()->is('pembimbing/monitoring-siswa') ? 'active' : '' }}">
                     <a href="{{ url('/pembimbing/monitoring-siswa')}}" class='sidebar-link'>
-                        <i class="bi bi-calendar-event-fill"></i>
+                        <i class="bi bi-display-fill"></i>
                         <span>Monitoring Siswa</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ request()->is('pembimbing/laporan-prakerin') ? 'active' : '' }}">
+                    <a href="{{ url('/pembimbing/laporan-prakerin')}}" class='sidebar-link'>
+                        <i class="bi bi-folder-fill"></i>
+                        <span>Laporan Akhir</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item {{ request()->is('pembimbing/penilaian-siswa') ? 'active' : '' }}">
                     <a href="{{ url('/pembimbing/penilaian-siswa')}}" class='sidebar-link'>
-                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                        <i class="bi bi-file-earmark-ruled-fill"></i>
                         <span>Penilaian</span>
                     </a>
                 </li>

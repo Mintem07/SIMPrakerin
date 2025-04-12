@@ -15,6 +15,10 @@ class LaporanAkhir extends Model
         'tanggal_upload',
     ];
 
+    protected $casts = [
+        'tanggal_upload' => 'datetime',
+    ];
+
     public function kelompok()
     {
         return $this->belongsTo(Kelompok::class, 'kelompok_id');

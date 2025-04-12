@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\KelompokResource\Pages;
 use App\Filament\Resources\KelompokResource\RelationManagers;
 use App\Models\Kelompok;
+use App\Models\Penjadwalan;
+// use App\Models\KepalaSekolah;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,6 +17,8 @@ use Filament\Support\Enums\MaxWidth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Contracts\View\View;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Blade;
 
 class KelompokResource extends Resource
 {
@@ -69,6 +73,23 @@ class KelompokResource extends Resource
                     ))
                     ->modalSubmitAction(false)
                     ->modalCancelAction(false),
+                Tables\Actions\Action::make('cetakPengajuan')
+                ->label('Cetak Form')
+                ->color('success')
+                ->icon('heroicon-s-printer')
+                ->action(function (Kelompok $record) {
+                    $pdf = Pdf::loadView('filament.resources.kelompok.pdf.surat-pengajuan-pkl', [
+                        'industri' => $record->industri,
+                        'pelaksanaan' => Penjadwalan::where('kegiatan', 'Pelaksanaan')->firstOrFail(),
+                        // 'kepsek' => KepalaSekolah::first(),
+                        'kelompok' => $record,
+                    ]);
+                    
+                    return response()->streamDownload(
+                        fn () => print($pdf->stream()),
+                        'Surat-Pengajuan-PKL-'.$record->nama_kelompok.'.pdf'
+                    );
+                }),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

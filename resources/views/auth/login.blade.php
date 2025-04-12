@@ -2,21 +2,6 @@
 
 @section('content')
 
-<!-- @if(session('error'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Toastify({
-            text: "{{ session('error') }}",
-            duration: 5000,
-            close: true,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to bottom right, #ff0000, #ff4500)",
-        }).showToast();
-    });
-</script>
-@endif -->
-
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-lg-5 col-12">
@@ -34,12 +19,12 @@
                         <div class="form-control-icon">
                             <i class="bi bi-person"></i>
                         </div>
+                        @error('username')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-                    @error('username')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
 
                     <div class="form-group position-relative has-icon-left mb-3">
                         <input id="password" type="password"
@@ -48,12 +33,12 @@
                         <div class="form-control-icon">
                             <i class="bi bi-shield-lock"></i>
                         </div>
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
 
                     <div class="form-check form-check-lg d-flex align-items-end">
                         <input class="form-check-input me-2" type="checkbox" name="remember" id="remember"

@@ -39,4 +39,9 @@ class Kelompok extends Model
     {
         return $this->hasOne(LaporanAkhir::class, 'kelompok_id');
     }
+
+    public function penilaian()
+    {
+        return $this->hasMany(Penilaian::class, 'siswa_id');
+    }
 }

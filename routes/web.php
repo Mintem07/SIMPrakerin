@@ -24,6 +24,10 @@ Route::get('/', function () {
     );
 });
 
+Route::get('/tes-pdf', function () {
+    return view('filament.resources.kelompok.pdf.surat-pengajuan-pkl');
+});
+
 Auth::routes();
 
 Route::middleware(['auth', 'siswa'])->group(function () {
@@ -43,14 +47,26 @@ Route::middleware(['auth', 'siswa'])->group(function () {
         
         Route::get('/laporan-akhir', [SiswaController::class, 'laporanAkhir'])->name('siswa.final-report');
         Route::post('/upload-laporan-akhir', [SiswaController::class, 'uploadLaporanAkhir'])->name('siswa.upload-laporan-akhir');
-
+        
+        Route::get('/penilaian', [SiswaController::class, 'viewPenilaian'])->name('siswa.penilaian');
+        Route::post('/upload-bukti', [SiswaController::class, 'uploadBuktiNilai'])->name('siswa.upload-bukti');
+        Route::get('/download/{id}', [SiswaController::class, 'downloadBerkas'])->name('berkas.download');
     });
+
+    Route::get('/check-new-notes', [SiswaController::class, 'checkNewNotes']);
 });
 
 Route::middleware(['auth', 'pembimbing'])->group(function () {
     Route::prefix('pembimbing')->group(function () {
         Route::get('/', [PembimbingController::class, 'dashboard'])->name('pembimbing.dashboard');
+
         Route::get('/monitoring-siswa', [PembimbingController::class, 'monitoring'])->name('pembimbing.monitoring');
+        Route::post('/add-catatan', [PembimbingController::class, 'addCatatan'])->name('pembimbing.add-catatan');
+
+        Route::get('/laporan-prakerin', [PembimbingController::class, 'laporanPrakerin'])->name('pembimbing.laporan-prakerin');
+        // Route::post('/add-catatan', [PembimbingController::class, 'addCatatan'])->name('pembimbing.add-catatan');
+
         Route::get('/penilaian-siswa', [PembimbingController::class, 'nilai'])->name('pembimbing.nilai');
+        Route::post('/edit-nilai', [PembimbingController::class, 'editNilai'])->name('pembimbing.edit-nilai');
     });
 });

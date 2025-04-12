@@ -41,7 +41,7 @@
                     <div class="divider-text">Pelaksanaan</div>
                 </div>
 
-                <li class="sidebar-item {{ request()->is('siswa/absensi-mingguan') ? 'active' : '' }}">
+                <li class="sidebar-item {{ request()->is('siswa/absensi') ? 'active' : '' }}">
                     <a href="{{ url('/siswa/absensi')}}" class='sidebar-link'>
                         <i class="bi bi-calendar-event-fill"></i>
                         <span>Absensi</span>
@@ -50,8 +50,15 @@
 
                 <li class="sidebar-item {{ request()->is('siswa/laporan-akhir') ? 'active' : '' }}">
                     <a href="{{ url('/siswa/laporan-akhir')}}" class='sidebar-link'>
-                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                        <i class="bi bi-file-earmark-text-fill"></i>
                         <span>Laporan Akhir</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ request()->is('siswa/penilaian') ? 'active' : '' }}">
+                    <a href="{{ url('/siswa/penilaian')}}" class='sidebar-link'>
+                        <i class="bi bi-folder-fill"></i>
+                        <span>Berkas dan Penilaian</span>
                     </a>
                 </li>
 

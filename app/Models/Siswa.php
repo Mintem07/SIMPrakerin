@@ -36,6 +36,6 @@ class Siswa extends Model
 
     public function penilaian()
     {
-        return $this->hasMany(Penilaian::class, 'siswa_id');
+        return $this->hasOne(Penilaian::class, 'siswa_id');
     }
 }

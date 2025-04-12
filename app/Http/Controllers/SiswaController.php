@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Siswa;
 use App\Models\Industri;
 use App\Models\Kelompok;
 use App\Models\AnggotaKelompok;
 use App\Models\LaporanAkhir;
+use App\Models\Absensi;
+use App\Models\CatatanPembimbing;
+use App\Models\Penjadwalan;
+use App\Models\Penilaian;
+use App\Models\Berkas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
@@ -16,10 +22,64 @@ class SiswaController extends Controller
 {
     public function dashboard()
     {
+        $siswa = Siswa::where('userId', auth()->user()->id)->first();
+        $kelompok = $siswa && $siswa->anggotaKelompok ? $siswa->anggotaKelompok->kelompok : null;
+        if (!$kelompok) {
+            return view(
+            'siswa.dashboard', 
+            ['title' => 'Dashboard Siswa'],
+            );
+        }
+
+        $pembimbing = $kelompok->pembimbingKelompok ? $kelompok->pembimbingKelompok->pembimbing : null;
+        if (!$pembimbing) {
+            return view(
+            'siswa.dashboard', 
+            ['title' => 'Dashboard Siswa'],
+            );
+        }
+
+        $newNote = CatatanPembimbing::whereHas('absensi', function($query) use ($siswa) {
+            $query->where('siswa_id', $siswa->id);
+        })
+        ->latest()
+        ->take(2)
+        ->get();
+
+        $jadwal = Penjadwalan::All();
+        // $jadwal = null;
+
+        // dd($newNote);
+        // dd($pembimbing);
         return view(
             'siswa.dashboard', 
-            ['title' => 'Dashboard Siswa']
+            ['title' => 'Dashboard Siswa'],
+            compact('newNote', 'pembimbing', 'jadwal')
         );
+    }
+
+    public function checkNewNotes()
+    {
+        // Dapatkan siswa yang login
+        $siswa = Siswa::where('userId', Auth::id())->first();
+        
+        if (!$siswa) {
+            return response()->json([
+                'has_new_notes' => false,
+                'count' => 0
+            ]);
+        }
+
+        $newNotes = CatatanPembimbing::where('created_at', '>=', now()->subMinute())
+            ->whereHas('absensi', function($query) use ($siswa) {
+                $query->where('siswa_id', $siswa->id);
+            })
+            ->count();
+
+        return response()->json([
+            'has_new_notes' => $newNotes > 0,
+            'count' => $newNotes
+        ]);
     }
 
     public function lengkapiProfil()
@@ -146,6 +206,45 @@ class SiswaController extends Controller
                 ['title' => 'Laporan Akhir Siswa']
             );
         }
+    }
+
+    public function viewPenilaian()
+    {
+        $siswa = Siswa::where('userId', auth()->user()->id)->first();
+        $kelompok = $siswa->anggotaKelompok ? $siswa->anggotaKelompok->kelompok : null;
+
+        $berkas = Berkas::All();
+
+        if (!$kelompok) {
+            return view(
+                'siswa.final-report',
+                ['title' => 'Laporan Akhir Siswa']
+            );
+        }
+
+        $pembimbing = $kelompok->pembimbingKelompok ? $kelompok->pembimbingKelompok->pembimbing : null;
+        if (!$pembimbing) {
+            return view(
+                'siswa.final-report',
+                ['title' => 'Laporan Akhir Siswa']
+            );
+        }
+
+        $statusKelompok = $kelompok->status;
+
+        if ($statusKelompok === 'diterima') {
+            return view(
+                'siswa.penilaian',
+                ['title' => 'Penilaian'],
+                compact('siswa', 'kelompok', 'pembimbing', 'berkas')
+            );
+        } else {
+            return view(
+                'siswa.penilaian',
+                ['title' => 'Penilaian']
+            );
+        }
+        
     }
 
     public function addSiswa(Request $request)
@@ -328,6 +427,16 @@ class SiswaController extends Controller
         ]);
 
         try {
+            // Cek apakah siswa sudah absen hari ini
+            $existingAbsensi = DB::table('absensis')
+                ->where('siswa_id', $validatedData['idSiswa'])
+                ->whereDate('tanggal', now()->format('Y-m-d'))
+                ->first();
+
+            if ($existingAbsensi) {
+                return redirect()->back()->with('error', 'Anda sudah melakukan absensi hari ini.');
+            }
+            
             // Upload file
             $file = $request->file('buktiAbsensi');
             $fileName = time() . '_' . $file->getClientOriginalName();
@@ -393,5 +502,53 @@ class SiswaController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengunggah laporan: ' . $e->getMessage());
         }
+    }
+
+    public function uploadBuktiNilai(Request $request)
+    {
+        $request->validate([
+            'idSiswa' => 'required|exists:siswas,id',
+            'idKelompok' => 'required|exists:kelompoks,id',
+            'idPembimbing' => 'required|exists:pembimbings,id',
+            'finalReport' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // dd($request);
+
+        try {
+            // Simpan file
+            $file = $request->file('finalReport');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('bukti_nilai', $fileName, 'public');
+    
+            // Simpan ke database
+            $penilaian = Penilaian::updateOrCreate(
+                ['siswa_id' => $request->idSiswa],
+                [
+                    'kelompok_id' => $request->idKelompok,
+                    'pembimbing_id' => $request->idPembimbing,
+                    'form_bukti' => $filePath
+                ]
+            );
+    
+            return redirect()->back()->with('success', 'Bukti nilai berhasil diunggah!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengunggah bukti nilai: ' . $e->getMessage());
+        }
+    }
+
+    public function downloadBerkas($id)
+    {
+        $berkas = Berkas::findOrFail($id);
+        $filePath = public_path('storage/'.$berkas->file_berkas);
+        
+        if (!file_exists($filePath)) {
+            abort(404, 'File tidak ditemukan di: '.$filePath);
+        }
+
+        $extension = pathinfo($berkas->file_berkas, PATHINFO_EXTENSION);
+        $downloadName = $berkas->nama_berkas.'.'.$extension;
+        
+        return response()->download($filePath, $downloadName);
     }
 }

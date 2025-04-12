@@ -34,6 +34,14 @@ class PembimbingResource extends Resource
                     ->options(User::where('role', 'pembimbing')->pluck('username', 'id'))
                     ->searchable()
                     ->required(),
+                Forms\Components\Select::make('jenis_kelamin')
+                    ->label('Jenis Kelamin')
+                    ->options([
+                        'Laki-laki' => 'Laki-laki',
+                        'Perempuan' => 'Perempuan'
+                    ])
+                    ->searchable()
+                    ->required(),
                 Forms\Components\TextInput::make('telp')
                     ->label('Nomor Telepon')
                     ->required()
@@ -47,7 +55,7 @@ class PembimbingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama_pembimbing')
-                    ->label('Nama Pembimbing')
+                    ->label('Nama')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('telp')
@@ -55,9 +63,9 @@ class PembimbingResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('jumlah_kelompok')
-                    ->label('Jumlah Kelompok')
+                    ->label('Dibimbing')
                     ->getStateUsing(function ($record) {
-                        return \App\Models\PembimbingKelompok::where('pembimbing_id', $record->id)->count();
+                        return \App\Models\PembimbingKelompok::where('pembimbing_id', $record->id)->count() . ' kelompok';
                     })
                     ->sortable(),
             ])
@@ -68,7 +76,7 @@ class PembimbingResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('pilih_kelompok')
-                    ->label('Pilih Kelompok')
+                    ->label('Tempatkan')
                     ->action(function (array $data, $record) {
                         \App\Models\PembimbingKelompok::create([
                             'pembimbing_id' => $record->id,
