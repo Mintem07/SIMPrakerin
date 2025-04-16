@@ -24,7 +24,15 @@ class KelompokResource extends Resource
 {
     protected static ?string $model = Kelompok::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getPluralLabel(): string
+    {
+        return 'Kelola Pengajuan';
+    }
+
+    protected static ?string $navigationGroup = 'Manajemen Kelompok';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationLabel = 'Kelola Pengajuan';
 
     public static function form(Form $form): Form
     {

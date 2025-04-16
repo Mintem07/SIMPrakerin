@@ -19,7 +19,15 @@ class PembimbingResource extends Resource
 {
     protected static ?string $model = Pembimbing::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getPluralLabel(): string
+    {
+        return 'Kelola Pembimbing';
+    }
+
+    protected static ?string $navigationGroup = 'Manajemen Kelompok';
+    protected static ?string $navigationIcon = 'heroicon-o-identification';
+    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationLabel = 'Kelola Pembimbing';
 
     public static function form(Form $form): Form
     {

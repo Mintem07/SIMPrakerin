@@ -17,7 +17,15 @@ class BerkasResource extends Resource
 {
     protected static ?string $model = Berkas::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getPluralLabel(): string
+    {
+        return 'Kelola Berkas';
+    }
+
+    protected static ?string $navigationGroup = 'Manajemen Akademik';
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?int $navigationSort = 5;
+    protected static ?string $navigationLabel = 'Kelola Berkas';
 
     public static function form(Form $form): Form
     {

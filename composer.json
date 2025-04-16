@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.6",
         "livewire/livewire": "3.5.2",
+        "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.73"
     },
     "require-dev": {

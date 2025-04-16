@@ -103,7 +103,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Input hidden untuk menyimpan ID -->
-                                                    <input type="text" name="absensi_id" value="{{ $data->id }}">
+                                                    <input type="hidden" name="absensi_id" value="{{ $data->id }}">
 
                                                     <!-- Input text untuk catatan -->
                                                     <div class="mb-3">

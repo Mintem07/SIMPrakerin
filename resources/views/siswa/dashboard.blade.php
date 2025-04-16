@@ -26,6 +26,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h4 class="m-0">Catatan Pembimbing</h4>
                                 <div class="d-flex align-items-center">
+                                    @if(isset($pembimbing))
                                     <div class="">
                                         <p class="font-bold text-end m-0">{{ $pembimbing->nama_pembimbing }}</p>
                                         <p class="font-muted text-end m-0">Pembimbing</p>
@@ -37,6 +38,7 @@
                                         <img src="{{asset('assets/images/faces/2.jpg')}}">
                                         @endif
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -50,6 +52,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(isset($newNote))
                                         @if(count($newNote) > 0)
                                         @foreach($newNote as $note)
                                         <tr>
@@ -59,17 +62,24 @@
                                             </td>
                                             <td class="col-auto">
                                                 <p class="mb-0" style="
-                                                display: -webkit-box;
-                                                -webkit-line-clamp: 2;
-                                                -webkit-box-orient: vertical;
-                                                overflow: hidden;
-                                                text-overflow: ellipsis;">
+                                                    display: -webkit-box;
+                                                    -webkit-line-clamp: 2;
+                                                    -webkit-box-orient: vertical;
+                                                    overflow: hidden;
+                                                    text-overflow: ellipsis;">
                                                     {{ $note->catatan }}
 
                                                 </p>
                                             </td>
                                         </tr>
                                         @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="2" class="text-center text-muted py-5">
+                                                Belum ada catatan dari pembimbing
+                                            </td>
+                                        </tr>
+                                        @endif
                                         @else
                                         <tr>
                                             <td colspan="2" class="text-center text-muted py-5">

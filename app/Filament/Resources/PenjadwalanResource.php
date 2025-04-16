@@ -17,7 +17,15 @@ class PenjadwalanResource extends Resource
 {
     protected static ?string $model = Penjadwalan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getPluralLabel(): string
+    {
+        return 'Kelola Jadwal';
+    }
+
+    protected static ?string $navigationGroup = 'Manajemen Akademik';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar';
+    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationLabel = 'Kelola Jadwal';
 
     public static function form(Form $form): Form
     {

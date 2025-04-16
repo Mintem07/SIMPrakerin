@@ -10,6 +10,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Filament\Navigation\NavigationGroup;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -28,10 +29,22 @@ class SuperAdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Violet,
             ])
+            ->brandName('SIM KP')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->navigationGroups([
+                NavigationGroup::make()
+                     ->label('Manajemen Akun')
+                     ->collapsible(false),
+                NavigationGroup::make()
+                     ->label('Manajemen Kelompok')
+                     ->collapsible(false),
+                NavigationGroup::make()
+                     ->label('Manajemen Akademik')
+                     ->collapsible(false),
+            ])
             ->pages([
                 Pages\Dashboard::class,
             ])

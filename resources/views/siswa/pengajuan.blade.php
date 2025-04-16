@@ -9,10 +9,11 @@
 
 <div class="page-heading">
     <h3>Pengajuan Kelompok</h3>
+    @if($kelompok && $kelompok->status == 'diterima')
     <div class="alert alert-success">
         Pengajuan diterima!.
     </div>
-    @if($kelompok && $kelompok->status == 'ditolak')
+    @elseif($kelompok && $kelompok->status == 'ditolak')
     <div class="alert alert-danger">
         Pengajuan ditolak silahkan ganti tempat industri dan melakukan pengajuan ulang!.
     </div>
@@ -38,7 +39,7 @@
                                     <div class="form-group">
                                         <label for="namaKelompok">Nama Kelompok</label>
                                         <input type="text" class="form-control mt-2" id="namaKelompok"
-                                            name="nama_kelompok" placeholder="masukkan nama kelompok">
+                                            name="nama_kelompok" placeholder="masukkan nama kelompok" required>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +49,7 @@
                                     <div class="form-group">
                                         <label for="namaIndustri">Nama Industri</label>
                                         <input type="text" class="form-control mt-2" id="namaIndustri"
-                                            name="nama_industri" placeholder="masukkan nama industri">
+                                            name="nama_industri" placeholder="masukkan nama industri" required>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +57,7 @@
                                 <div class="col-12">
                                     <div class="form-group mb-3">
                                         <label for="alamat" class="form-label">Alamat</label>
-                                        <textarea class="form-control" id="alamat" name="alamat" rows="2"></textarea>
+                                        <textarea class="form-control" id="alamat" name="alamat" rows="2" required></textarea>
                                     </div>
                                 </div>
                             </div>

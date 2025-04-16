@@ -23,19 +23,23 @@ class SiswaController extends Controller
     public function dashboard()
     {
         $siswa = Siswa::where('userId', auth()->user()->id)->first();
+        $jadwal = Penjadwalan::All();
+
         $kelompok = $siswa && $siswa->anggotaKelompok ? $siswa->anggotaKelompok->kelompok : null;
         if (!$kelompok) {
             return view(
-            'siswa.dashboard', 
-            ['title' => 'Dashboard Siswa'],
+                'siswa.dashboard', 
+                ['title' => 'Dashboard Siswa'],
+                compact('jadwal')
             );
         }
 
         $pembimbing = $kelompok->pembimbingKelompok ? $kelompok->pembimbingKelompok->pembimbing : null;
         if (!$pembimbing) {
             return view(
-            'siswa.dashboard', 
-            ['title' => 'Dashboard Siswa'],
+                'siswa.dashboard', 
+                ['title' => 'Dashboard Siswa'],
+                compact('jadwal')
             );
         }
 
@@ -45,12 +49,14 @@ class SiswaController extends Controller
         ->latest()
         ->take(2)
         ->get();
+        if (!$newNote) {
+            return view(
+                'siswa.dashboard', 
+                ['title' => 'Dashboard Siswa'],
+                compact('jadwal')
+            );
+        }
 
-        $jadwal = Penjadwalan::All();
-        // $jadwal = null;
-
-        // dd($newNote);
-        // dd($pembimbing);
         return view(
             'siswa.dashboard', 
             ['title' => 'Dashboard Siswa'],
@@ -336,7 +342,7 @@ class SiswaController extends Controller
             $kelompok = Kelompok::create([
                 'nama_kelompok' => $request->nama_kelompok,
                 'industri_id' => $industri->id,
-                'status' => 'pending', // Default status
+                'status' => 'pending',
             ]);
 
             // Simpan data anggota kelompok
@@ -427,6 +433,10 @@ class SiswaController extends Controller
         ]);
 
         try {
+            if ($request->file('buktiAbsensi')->getSize() > 2048 * 1024) { // 2048 KB * 1024 = bytes
+                return redirect()->back()->with('error', 'Ukuran gambar tidak boleh lebih dari 2 MB');
+            }
+
             // Cek apakah siswa sudah absen hari ini
             $existingAbsensi = DB::table('absensis')
                 ->where('siswa_id', $validatedData['idSiswa'])

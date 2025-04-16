@@ -6,8 +6,8 @@
     <div class="row justify-content-center mt-5">
         <div class="col-lg-5 col-12">
             <div id="auth-left">
-                <h1 class="auth-title">{{ __('Log in.') }}</h1>
-                <p class="auth-subtitle mb-5">Log in with your data</p>
+                <h1 class="auth-title">{{ __('Masuk ke Akun Prakerin') }}</h1>
+                <p class="auth-subtitle mb-5">Akses sistem dengan login terlebih dahulu.</p>
 
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
@@ -51,15 +51,6 @@
                         {{ __('Login') }}
                     </button>
                 </form>
-                @if (Route::has('password.request'))
-                <div class="text-center mt-5 text-lg">
-                    <p>
-                        <a class="" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    </p>
-                </div>
-                @endif
             </div>
         </div>
     </div>
