@@ -67,6 +67,19 @@
     </script>
     @endif
 
+    @if($errors->any())
+    <script>
+    Toastify({
+        text: "{{ implode('<br>', $errors->all()) }}",
+        duration: 5000,
+        close: true,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "linear-gradient(to bottom right, #ff5f6d,rgb(234, 144, 48))",
+    }).showToast();
+    </script>
+    @endif
+
     <!-- js -->
     <script src="{{asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>

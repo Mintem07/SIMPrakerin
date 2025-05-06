@@ -13,117 +13,128 @@
 
 <div class="page-content">
     <section class="row">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-12 col-lg-7">
-                    <!-- notif -->
-                    <div class="tempat-notif">
+        <div class="col-12 col-lg-7">
 
-                    </div>
-                    <!-- end notif -->
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h4 class="m-0">Catatan Pembimbing</h4>
-                                <div class="d-flex align-items-center">
-                                    @if(isset($pembimbing))
-                                    <div class="">
-                                        <p class="font-bold text-end m-0">{{ $pembimbing->nama_pembimbing }}</p>
-                                        <p class="font-muted text-end m-0">Pembimbing</p>
-                                    </div>
-                                    <div class="avatar avatar-xl ms-3 mb-0">
-                                        @if($pembimbing->jenis_kelamin == 'Perempuan')
-                                        <img src="{{asset('assets/images/faces/3.jpg')}}">
-                                        @else
-                                        <img src="{{asset('assets/images/faces/2.jpg')}}">
-                                        @endif
-                                    </div>
-                                    @endif
-                                </div>
+            <div class="tempat-notif"></div>
+
+            @if(isset($status))
+            <div class="div">
+                @if($status->status === 'Lulus')
+                <div class="alert alert-success">
+                    <h4 class="alert-heading">Kamu Lulus!</h4>
+                    <p>Selamat kamu telah berusaha dengan baik.</p>
+                </div>
+                @elseif($status->status === 'Tidak Lulus')
+                <div class="alert alert-danger">
+                    <h4 class="alert-heading">Kamu Tidak Lulus!</h4>
+                    <p>Berusaha lebih keras lagi diperiode selanjutnya!</p>
+                </div>
+                @else
+                @endif
+            </div>
+            @endif
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="m-0">Catatan Pembimbing</h4>
+                        <div class="d-flex align-items-center">
+                            @if(isset($pembimbing))
+                            <div class="">
+                                <p class="font-bold text-end m-0">{{ $pembimbing->nama_pembimbing }}</p>
+                                <p class="font-muted text-end m-0">Pembimbing</p>
                             </div>
+                            <div class="avatar avatar-xl ms-3 mb-0">
+                                @if($pembimbing->jenis_kelamin == 'Perempuan')
+                                <img src="{{asset('assets/images/faces/3.jpg')}}">
+                                @else
+                                <img src="{{asset('assets/images/faces/2.jpg')}}">
+                                @endif
+                            </div>
+                            @endif
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-lg">
-                                    <thead>
-                                        <tr>
-                                            <th>Tanggal</th>
-                                            <th>Catatan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if(isset($newNote))
-                                        @if(count($newNote) > 0)
-                                        @foreach($newNote as $note)
-                                        <tr>
-                                            <td class="col-3">
-                                                <p class="font-bold mb-0">
-                                                    {{ $note->created_at->translatedFormat('j M') }}</p>
-                                            </td>
-                                            <td class="col-auto">
-                                                <p class="mb-0" style="
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-lg">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Catatan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(isset($newNote))
+                                @if(count($newNote) > 0)
+                                @foreach($newNote as $note)
+                                <tr>
+                                    <td class="col-3">
+                                        <p class="font-bold mb-0">
+                                            {{ $note->created_at->translatedFormat('j M') }}</p>
+                                    </td>
+                                    <td class="col-auto">
+                                        <p class="mb-0" style="
                                                     display: -webkit-box;
                                                     -webkit-line-clamp: 2;
                                                     -webkit-box-orient: vertical;
                                                     overflow: hidden;
                                                     text-overflow: ellipsis;">
-                                                    {{ $note->catatan }}
+                                            {{ $note->catatan }}
 
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        @else
-                                        <tr>
-                                            <td colspan="2" class="text-center text-muted py-5">
-                                                Belum ada catatan dari pembimbing
-                                            </td>
-                                        </tr>
-                                        @endif
-                                        @else
-                                        <tr>
-                                            <td colspan="2" class="text-center text-muted py-5">
-                                                Belum ada catatan dari pembimbing
-                                            </td>
-                                        </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                        </p>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted py-5">
+                                        Belum ada catatan dari pembimbing
+                                    </td>
+                                </tr>
+                                @endif
+                                @else
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted py-5">
+                                        Belum ada catatan dari pembimbing
+                                    </td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="col-12 col-lg-5">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="divider">
-                                <h5 class="divider-text">Jadwal Kegiatan</h5>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="timeline-with-icons">
-                                @foreach($jadwal as $data)
-                                <li class="timeline-item mb-5 @if(!$data->is_active) text-muted opacity-75 @endif">
-                                    <span class="timeline-icon">
-                                        <i
-                                            class="bi bi-circle-fill @if(!$data->is_active) text-muted @else text-success @endif"></i>
-                                    </span>
-                                    <h5 class="fw-bold @if(!$data->is_active) text-secondary @endif">
-                                        {{ $data->kegiatan }}
-                                    </h5>
-                                    <p
-                                        class="mb-2 fw-bold @if(!$data->is_active) text-secondary @else text-muted @endif">
-                                        {{ $data->tgl_selesai ? 
-    (\Carbon\Carbon::parse($data->tgl_mulai)->format('Y-m') == \Carbon\Carbon::parse($data->tgl_selesai)->format('Y-m') ? 
-        \Carbon\Carbon::parse($data->tgl_mulai)->translatedFormat('j').' - '.\Carbon\Carbon::parse($data->tgl_selesai)->translatedFormat('j M Y') : 
-        \Carbon\Carbon::parse($data->tgl_mulai)->translatedFormat('j M').' - '.\Carbon\Carbon::parse($data->tgl_selesai)->translatedFormat('j M Y')) : 
-    \Carbon\Carbon::parse($data->tgl_mulai)->translatedFormat('j M Y') }}
-                                    </p>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div class="card">
+                <div class="card-header">
+                    <div class="divider">
+                        <h5 class="divider-text">Jadwal Kegiatan</h5>
                     </div>
+                </div>
+                <div class="card-body">
+                    <ul class="timeline-with-icons">
+                        @foreach($jadwal as $data)
+                        <li class="timeline-item mb-5 @if(!$data->is_active) text-muted opacity-75 @endif">
+                            <span class="timeline-icon">
+                                <i
+                                    class="bi bi-circle-fill @if(!$data->is_active) text-muted @else text-success @endif"></i>
+                            </span>
+                            <h5 class="fw-bold @if(!$data->is_active) text-secondary @endif">
+                                {{ $data->kegiatan }}
+                            </h5>
+                            <p class="mb-2 fw-bold @if(!$data->is_active) text-secondary @else text-muted @endif">
+                                {{ $data->tgl_selesai ? 
+                                            (\Carbon\Carbon::parse($data->tgl_mulai)->format('Y-m') == \Carbon\Carbon::parse($data->tgl_selesai)->format('Y-m') ? 
+                                            \Carbon\Carbon::parse($data->tgl_mulai)->translatedFormat('j').' - '.\Carbon\Carbon::parse($data->tgl_selesai)->translatedFormat('j M Y') : 
+                                            \Carbon\Carbon::parse($data->tgl_mulai)->translatedFormat('j M').' - '.\Carbon\Carbon::parse($data->tgl_selesai)->translatedFormat('j M Y')) : 
+                                            \Carbon\Carbon::parse($data->tgl_mulai)->translatedFormat('j M Y') 
+                                        }}
+                            </p>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>

@@ -6,30 +6,20 @@ use App\Models\Penilaian;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Illuminate\Support\Collection;
 
 class PenilaianExport implements FromCollection, WithHeadings, WithMapping
 {
-    protected $filters;
+    protected $records;
 
-    public function __construct(array $filters = [])
+    public function __construct(Collection $records)
     {
-        $this->filters = $filters;
+        $this->records = $records;
     }
 
     public function collection()
     {
-        $query = Penilaian::with(['siswa', 'kelompok', 'pembimbing']);
-
-        // Apply filters if present
-        if (isset($this->filters['kelompok_id'])) {
-            $query->where('kelompok_id', $this->filters['kelompok_id']);
-        }
-
-        if (isset($this->filters['pembimbing_id'])) {
-            $query->where('pembimbing_id', $this->filters['pembimbing_id']);
-        }
-
-        return $query->get();
+        return $this->records;
     }
 
     public function headings(): array
@@ -40,19 +30,25 @@ class PenilaianExport implements FromCollection, WithHeadings, WithMapping
             'Pembimbing',
             'Nilai Rata-rata',
             'Nilai Laporan',
-            'Status'
+            'Status',
+            'Bukti Form Penilaian'
         ];
     }
 
     public function map($penilaian): array
     {
+        $link = $penilaian->form_bukti 
+        ? url('storage/bukti_nilai/' . $penilaian->form_bukti) 
+        : '';
+
         return [
-            $penilaian->siswa->nama_siswa,
-            $penilaian->kelompok->nama_kelompok,
-            $penilaian->pembimbing->nama_pembimbing,
-            $penilaian->average_poin,
-            $penilaian->report_poin,
-            $penilaian->status,
+            $penilaian->siswa->nama_siswa ?? '',
+            $penilaian->kelompok->nama_kelompok ?? '',
+            $penilaian->pembimbing->nama_pembimbing ?? '',
+            $penilaian->average_poin ?? '',
+            $penilaian->report_poin ?? '',
+            $penilaian->status ?? '',
+            $link ? '=HYPERLINK("' . $link . '", "Lihat Bukti")' : '',
         ];
     }
 }

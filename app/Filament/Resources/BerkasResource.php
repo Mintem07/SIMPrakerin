@@ -24,7 +24,7 @@ class BerkasResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Akademik';
     protected static ?string $navigationIcon = 'heroicon-o-folder';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationLabel = 'Kelola Berkas';
 
     public static function form(Form $form): Form

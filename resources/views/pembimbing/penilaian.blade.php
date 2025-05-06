@@ -58,6 +58,14 @@
                                 @endif
                             </td>
                             <td>
+                                @if(isset($data->form_bukti))
+                                @php
+                                $extension = pathinfo($data->form_bukti, PATHINFO_EXTENSION);
+                                $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                $isImage = in_array(strtolower($extension), $imageExtensions);
+                                @endphp
+
+                                @if($isImage)
                                 <button type="button" class="btn icon btn-sm btn-info" data-bs-toggle="modal"
                                     data-bs-target="#buktiModal{{ $data->id }}">
                                     <i class="bi bi-eye-fill"></i>
@@ -78,7 +86,8 @@
                                                     <div class="col-12">
                                                         @if($data->form_bukti)
                                                         <div style="width: 100%;">
-                                                            <img src="{{ asset('storage/' . $data->form_bukti) }}"
+                                                            <p>{{$data->form_bukti}}</p>
+                                                            <img src="{{ asset('storage/bukti_nilai/' . $data->form_bukti) }}"
                                                                 alt="Bukti Absensi" class="img-fluid"
                                                                 style="width: 100%; height: 100%; object-fit: cover;">
                                                         </div>
@@ -95,6 +104,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                @elseif(strtolower($extension) === 'pdf')
+
+                                <a href="{{ asset('storage/bukti_nilai/' . $data->form_bukti) }}" target="_blank"
+                                    class="btn icon btn-sm btn-info">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+
+                                @else
+
+                                <button type="button" class="btn icon btn-sm btn-info">
+                                    <i class="bi bi-cross"></i>
+                                </button>
+
+                                @endif
+                                @endif
+
 
                                 <button type="button" class="btn icon btn-sm btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#editNilai{{ $data->id }}">
@@ -116,7 +141,7 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <input type="text" name="id" value="{{ $data->id }}">
+                                                    <input type="hidden" name="id" value="{{ $data->id }}">
 
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
@@ -126,7 +151,8 @@
                                                                     id="rata-rata" step="0.01" min="0" max="100"
                                                                     value="{{ old('avgPoin', $data->average_poin) }}"
                                                                     required>
-                                                                <p><small class="text-muted">Nilai rata-rata (contoh: 85.50)</small></p>
+                                                                <p><small class="text-muted">Nilai rata-rata (contoh:
+                                                                        85.50)</small></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6">

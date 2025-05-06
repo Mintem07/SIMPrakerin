@@ -34,32 +34,30 @@
                     <div class="col-12 col-lg-6">
                         <div class="form-body">
                             <h4 class="card-title mb-3">Kelompok</h4>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="namaKelompok">Nama Kelompok</label>
-                                        <input type="text" class="form-control mt-2" id="namaKelompok"
-                                            name="nama_kelompok" placeholder="masukkan nama kelompok" required>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="namaKelompok">Nama Kelompok</label>
+                                <input type="text" class="form-control mt-2" id="namaKelompok"
+                                    name="nama_kelompok" placeholder="masukkan nama kelompok" required>
                             </div>
                             <h4 class="card-title mt-4 mb-3">Tempat</h4>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="namaIndustri">Nama Industri</label>
-                                        <input type="text" class="form-control mt-2" id="namaIndustri"
-                                            name="nama_industri" placeholder="masukkan nama industri" required>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="namaIndustri">Nama Industri</label>
+                                <input type="text" class="form-control mt-2" id="namaIndustri"
+                                    name="nama_industri" placeholder="masukkan nama industri" required>
                             </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="alamat" class="form-label">Alamat</label>
-                                        <textarea class="form-control" id="alamat" name="alamat" rows="2" required></textarea>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="pimpinan">Pimpinan</label>
+                                <input type="text" class="form-control mt-2" id="pimpinan"
+                                    name="pimpinan" placeholder="masukkan nama pimpinan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bidang">Bidang</label>
+                                <input type="text" class="form-control mt-2" id="bidang"
+                                    name="bidang" placeholder="perusahaan bergerak dibidang" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="2" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -112,33 +110,31 @@
                     <div class="col-12 col-lg-6">
                         <div class="form-body">
                             <h4 class="card-title mb-3">Kelompok</h4>
-                            <div class="row">
-                                <input type="hidden" id="kelompokId" name="kelompokId" value="{{$kelompok->id}}">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="namaKelompok">Nama Kelompok</label>
-                                        <input type="text" class="form-control mt-2" id="namaKelompok"
-                                            name="nama_kelompok" placeholder="masukkan nama kelompok" value="{{$kelompok->nama_kelompok}}">
-                                    </div>
-                                </div>
+                            <input type="hidden" id="kelompokId" name="kelompokId" value="{{$kelompok->id}}">
+                            <div class="form-group">
+                                <label for="namaKelompok">Nama Kelompok</label>
+                                <input type="text" class="form-control mt-2" id="namaKelompok"
+                                    name="nama_kelompok" placeholder="masukkan nama kelompok" value="{{$kelompok->nama_kelompok}}">
                             </div>
                             <h4 class="card-title mt-4 mb-3">Tempat</h4>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="namaIndustri">Nama Industri</label>
-                                        <input type="text" class="form-control mt-2" id="namaIndustri"
-                                            name="nama_industri" placeholder="masukkan nama industri" value="{{$kelompok->industri->nama_industri}}">
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="namaIndustri">Nama Industri</label>
+                                <input type="text" class="form-control mt-2" id="namaIndustri"
+                                    name="nama_industri" placeholder="masukkan nama industri" value="{{$kelompok->industri->nama_industri}}">
                             </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="alamat" class="form-label">Alamat</label>
-                                        <textarea class="form-control" id="alamat" name="alamat" rows="2">{{$kelompok->industri->alamat}}</textarea>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="pimpinan">Pimpinan</label>
+                                <input type="text" class="form-control mt-2" id="pimpinan"
+                                    name="pimpinan" placeholder="masukkan nama pimpinan" value="{{$kelompok->industri->pimpinan}}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bidang">Bidang</label>
+                                <input type="text" class="form-control mt-2" id="bidang"
+                                    name="bidang" placeholder="perusahaan bergerak dibidang" value="{{$kelompok->industri->bidang}}" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="2">{{$kelompok->industri->alamat}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -179,34 +175,34 @@
                     <div class="col-12 col-lg-6">
                         <div class="form-body">
                             <h4 class="card-title mb-3">Kelompok</h4>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="namaKelompok">Nama Kelompok</label>
-                                        <input type="text" class="form-control mt-2" id="namaKelompok"
-                                            name="nama_kelompok" value="{{ $kelompok->nama_kelompok }}" readonly>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="namaKelompok">Nama Kelompok</label>
+                                <input type="text" class="form-control mt-2" id="namaKelompok"
+                                    name="nama_kelompok" value="{{ $kelompok->nama_kelompok }}" readonly>
                             </div>
                             <h4 class="card-title mt-4 mb-3">Tempat</h4>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="namaIndustri">Nama Industri</label>
-                                        <input type="text" class="form-control mt-2" id="namaIndustri"
-                                            name="nama_industri" value="{{ $kelompok->industri->nama_industri }}"
-                                            readonly>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="namaIndustri">Nama Industri</label>
+                                <input type="text" class="form-control mt-2" id="namaIndustri"
+                                    name="nama_industri" value="{{ $kelompok->industri->nama_industri }}"
+                                    readonly>
                             </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="alamat" class="form-label">Alamat</label>
-                                        <textarea class="form-control" id="alamat" name="alamat" rows="2"
-                                            readonly>{{ $kelompok->industri->alamat }}</textarea>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="pimpinan">Pimpinan</label>
+                                <input type="text" class="form-control mt-2" id="pimpinan"
+                                    name="pimpinan" value="{{ $kelompok->industri->pimpinan }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="bidang">Bidang</label>
+                                <input type="text" class="form-control mt-2" id="bidang"
+                                    name="bidang" value="{{ $kelompok->industri->bidang }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="2"
+                                    readonly>{{ $kelompok->industri->alamat }}</textarea>
                             </div>
                         </div>
                     </div>

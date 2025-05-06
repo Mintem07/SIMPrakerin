@@ -34,9 +34,9 @@
                             <td>{{ $data->kelompok->nama_kelompok }}</td>
                             <td>{{ $data->tanggal_upload ? $data->tanggal_upload->format('d-m-Y') : '-' }}</td>
                             <td>
-                                <a href="{{ asset('storage/' . $data->file_laporan_akhir) }}" target="_blank"
+                                <a href="{{ asset('storage/laporan_akhir/' . $data->file_laporan_akhir) }}" target="_blank"
                                     class="btn btn-sm btn-primary">Lihat Laporan</a>
-                                <a href="{{ asset('storage/' . $data->file_laporan_akhir) }}" download
+                                <a href="{{ asset('storage/laporan_akhir/' . $data->file_laporan_akhir) }}" download
                                     class="btn btn-sm btn-success ml-2">Download</a>
                             </td>
                         </tr>

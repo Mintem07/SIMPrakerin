@@ -64,7 +64,7 @@
                                                     <div class="col-lg-6 col-12">
                                                         @if($data->foto_kegiatan)
                                                         <div style="width: 100%; aspect-ratio: 1/1; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 1px solid #ddd;">
-                                                            <img src="{{ asset('storage/' . $data->foto_kegiatan) }}"
+                                                            <img src="{{ asset('storage/absensi/' . $data->foto_kegiatan) }}"
                                                                 alt="Bukti Absensi" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
                                                         </div>
                                                         @else
@@ -167,4 +167,11 @@
     @endif
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+let tableAbsensi = document.querySelector('#tableAbsensi');
+let datatableAbsensi = new simpleDatatables.DataTable(tableAbsensi);
+</script>
 @endsection

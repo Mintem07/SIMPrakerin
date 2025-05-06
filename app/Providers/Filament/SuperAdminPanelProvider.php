@@ -31,7 +31,7 @@ class SuperAdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Violet,
             ])
-            ->brandName('SIM KP')
+            ->brandName('SIM PRAKERIN')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->navigationGroups([
@@ -39,10 +39,10 @@ class SuperAdminPanelProvider extends PanelProvider
                      ->label('Manajemen Akun')
                      ->collapsible(false),
                 NavigationGroup::make()
-                     ->label('Manajemen Kelompok')
+                     ->label('Manajemen Akademik')
                      ->collapsible(false),
                 NavigationGroup::make()
-                     ->label('Manajemen Akademik')
+                     ->label('Manajemen Kelompok')
                      ->collapsible(false),
             ])
             ->pages([
@@ -50,8 +50,8 @@ class SuperAdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

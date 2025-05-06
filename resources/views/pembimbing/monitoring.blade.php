@@ -38,7 +38,7 @@
                             <td>
                                 <button type="button" class="btn icon btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#detailAbsensiModal{{ $data->id }}">
-                                    <i class="bi bi-info-circle"></i>
+                                    <i class="bi bi-eye"></i>
                                 </button>
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                     data-bs-target="#catatanModal{{ $data->id }}">
@@ -61,7 +61,7 @@
                                                     @if($data->foto_kegiatan)
                                                     <div
                                                         style="width: 320px; height: 320px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 1px solid #ddd;">
-                                                        <img src="{{ asset('storage/' . $data->foto_kegiatan) }}"
+                                                        <img src="{{ asset('storage/absensi/' . $data->foto_kegiatan) }}"
                                                             alt="Bukti Absensi" class="img-fluid">
                                                     </div>
                                                     @else

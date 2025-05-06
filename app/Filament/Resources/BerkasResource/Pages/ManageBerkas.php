@@ -13,7 +13,9 @@ class ManageBerkas extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->modalWidth('md'),
+            Actions\CreateAction::make()
+            ->label('Tambah Berkas')
+            ->modalWidth('md'),
         ];
     }
 }

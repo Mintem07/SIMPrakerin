@@ -31,7 +31,7 @@ class KelompokResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Kelompok';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationLabel = 'Kelola Pengajuan';
 
     public static function form(Form $form): Form
@@ -64,7 +64,14 @@ class KelompokResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nama_kelompok')->label('Nama Kelompok'),
                 Tables\Columns\TextColumn::make('industri.nama_industri')->label('Nama Industri'),
-                Tables\Columns\TextColumn::make('status')->label('Status'),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'pending' => 'secondary',
+                        'diterima' => 'success',
+                        'ditolak' => 'danger',
+                    }),
             ])
             ->filters([
                 //

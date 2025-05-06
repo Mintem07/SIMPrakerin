@@ -61,6 +61,34 @@ class UserResource extends Resource
                     ->label('Username')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('nama')
+                    ->label('Nama')
+                    ->getStateUsing(function ($record) {
+                        if ($record->siswa) {
+                            return $record->siswa->nama_siswa;
+                        }
+                        if ($record->pembimbing) {
+                            return $record->pembimbing->nama_pembimbing;
+                        }
+                        return '-';
+                    })
+                    ->searchable(query: function (Builder $query, string $search) {
+                        $query->whereHas('siswa', fn($q) => $q->where('nama_siswa', 'like', "%{$search}%"))
+                              ->orWhereHas('pembimbing', fn($q) => $q->where('nama_pembimbing', 'like', "%{$search}%"));
+                    })
+                    ->sortable(query: function (Builder $query, string $direction) {
+                        $query->orderBy(
+                            Siswa::select('nama_siswa')
+                                ->whereColumn('siswa.userId', 'users.id')
+                                ->limit(1),
+                            $direction
+                        )->orderBy(
+                            Pembimbing::select('nama_pembimbing')
+                                ->whereColumn('pembimbing.userId', 'users.id')
+                                ->limit(1),
+                            $direction
+                        );
+                    }),
                 TextColumn::make('password')
                     ->label('Password')
                     ->hidden(),

@@ -34,9 +34,10 @@
                                 @foreach($berkas as $file)
                                 <tr>
                                     <td>
-                                        <p class="m-0"><span><i
-                                                    class="bi bi-file-earmark-ruled-fill text-success me-2"></i></span>{{ $file->nama_berkas }}
-                                        </p>
+                                        <div class="fs-5">
+                                            <i class="bi bi-file-earmark-ruled-fill text-success me-2"></i>
+                                            {{ $file->nama_berkas }}
+                                        </div>
                                     </td>
                                     <td>
                                         <a href="{{ route('berkas.download', $file->id) }}"
@@ -51,6 +52,18 @@
             </div>
         </div>
         <div class="col-12 col-lg-5">
+
+            @if(isset($bukti))
+            <div class="div">
+                <div class="alert alert-light">
+                    <div class="fs-5">
+                        <i class="bi bi-file-earmark-ruled-fill text-danger me-2 fs-3"></i>
+                        {{ $bukti->form_bukti }} terunggah
+                    </div>
+                </div>
+            </div>
+            @endif
+
             <form action="{{route('siswa.upload-bukti')}}" method="post" class="form form-vertical"
                 enctype="multipart/form-data">
                 @csrf

@@ -26,7 +26,7 @@ class PembimbingResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Kelompok';
     protected static ?string $navigationIcon = 'heroicon-o-identification';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationLabel = 'Kelola Pembimbing';
 
     public static function form(Form $form): Form
@@ -77,6 +77,9 @@ class PembimbingResource extends Resource
                     })
                     ->sortable(),
             ])
+            ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('user', function ($q) {
+                $q->where('role', 'pembimbing');
+            }))
             ->filters([
                 //
             ])

@@ -21,6 +21,6 @@ class EnsureUserIsSiswa
             return $next($request);
         }
 
-        return redirect('/')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        return redirect('/anda-tidak-memiliki-akses')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 }
